@@ -1,0 +1,32 @@
+name: NPM Publish Dev
+
+inputs:
+  access:
+    required: false
+    default: null
+  node-version:
+    required: false
+    default: 'lts/*'
+  npm-token:
+    required: true
+  tag:
+    required: false
+    default: 'dev'
+
+runs:
+  using: composite
+  steps:
+    -
+      uses: actions/checkout@v4
+    -
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+    -
+      shell: bash
+      run: |
+        npm ci
+        npm version $(npm pkg get version | xargs)-$(date +%s)-${{ github.sha }}
+        npm publish --tag ${{ inputs.tag }} --access ${{ inputs.access }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
