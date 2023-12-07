@@ -3,7 +3,7 @@ name: NPM Publish Dev
 inputs:
   access:
     required: false
-    default: null
+    default: 'null'
   node-version:
     required: false
     default: 'lts/*'
