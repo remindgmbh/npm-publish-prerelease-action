@@ -27,7 +27,7 @@ runs:
       shell: bash
       run: |
         npm ci
-        npm version $(npm pkg get version | xargs)-$(date +%s)-${{ github.sha }}
+        npm version --no-git-tag-version $(npm pkg get version | xargs)-$(date +%s)-${{ github.sha }}
         npm publish --tag ${{ inputs.tag }} --access ${{ inputs.access }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
