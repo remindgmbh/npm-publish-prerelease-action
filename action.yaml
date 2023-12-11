@@ -3,28 +3,25 @@ name: NPM Publish Dev
 inputs:
   access:
     required: false
-    default: 'null'
+    default: "null"
   node-version:
     required: false
-    default: 'lts/*'
+    default: "lts/*"
   npm-token:
     required: true
   tag:
     required: false
-    default: 'dev'
+    default: "dev"
 
 runs:
   using: composite
   steps:
-    -
-      uses: actions/checkout@v4
-    -
-      uses: actions/setup-node@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: 'https://registry.npmjs.org'
-    -
-      shell: bash
+        registry-url: "https://registry.npmjs.org"
+    - shell: bash
       run: |
         npm ci
         npm version --no-git-tag-version $(npm pkg get version | xargs)-$(date +%s)-${{ github.sha }}
