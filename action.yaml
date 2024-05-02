@@ -13,10 +13,6 @@ inputs:
   npm-token:
     description: NPM access token used to publish the package to the npm registry
     required: true
-  tag:
-    description: Tag under which the package will be published
-    required: false
-    default: "dev"
 
 runs:
   using: composite
@@ -30,6 +26,6 @@ runs:
       run: |
         npm ci
         npm version --no-git-tag-version $(npm pkg get version | xargs)-$(date +%s)-${{ github.sha }}
-        npm publish --tag ${{ inputs.tag }} --access ${{ inputs.access }}
+        npm publish --tag ${{ github.ref_name }} --access ${{ inputs.access }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
