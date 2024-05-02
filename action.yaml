@@ -1,4 +1,4 @@
-name: NPM Publish Dev
+name: NPM Publish Prerelease
 description: Publish an npm package appending timestamp and commit sha to current version
 
 inputs:
